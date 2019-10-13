@@ -29,8 +29,7 @@ namespace Apf.Weather.Services.OpenWeatherClient
         }
 
         public async Task<IEnumerable<CityDayForcastDto>> Get5DayForecast(string city)
-        {
-          
+        {           
             var forecast = await _client.GetStringAsync($"?q={city}&units=metric&APPID={_apiKey}");
             var model = JsonConvert.DeserializeObject<OWMResponse>(forecast);
             return _aggregator.AggregateForcastData(model.ForecastList);

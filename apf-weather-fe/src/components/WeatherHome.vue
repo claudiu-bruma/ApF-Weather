@@ -51,6 +51,7 @@
 <script>
 import axios from 'axios'
 import ForecastCard from '../components/ForecastCard';
+import * as configuration from '../plugins/configurations.js'
 export default {
   components:{
     ForecastCard
@@ -69,9 +70,10 @@ export default {
   },
   methods:{
     getForecast:function(){
-        console.log(this.forecastCity);
+
+
         let _this = this;
-          axios.get(`http://localhost:5000/weatherforecast?location=${this.forecastCity}`).then(function (response) {
+          axios.get(`${configuration.apiUrl}${this.forecastCity}`).then(function (response) {
             // handle success
             console.log(response);
             _this.$data.forecasts = response.data;

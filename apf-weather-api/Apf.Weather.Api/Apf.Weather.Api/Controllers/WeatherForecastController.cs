@@ -21,7 +21,7 @@ namespace Apf.Weather.Api.Controllers
         private readonly IOpenWeatherClient _openWeatherClient;
         private IMemoryCache _cache;
         private const string country = "DE";
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IOpenWeatherClient openWeatherClient, IMemoryCache  cache)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IOpenWeatherClient openWeatherClient, IMemoryCache cache)
         {
             _logger = logger;
             _openWeatherClient = openWeatherClient;
@@ -41,13 +41,13 @@ namespace Apf.Weather.Api.Controllers
                 var items = await
                          _cache.GetOrCreateAsync(location, entry =>
                      {
-                                entry.SlidingExpiration = TimeSpan.FromHours(3);
-            return  _openWeatherClient.Get5DayForecast($"{location},{country}"); 
-        });
-                
-                return new OkObjectResult( items);
+                         entry.SlidingExpiration = TimeSpan.FromHours(3);
+                         return _openWeatherClient.Get5DayForecast($"{location},{country}");
+                     });
+
+                return new OkObjectResult(items);
             }
-            catch (HttpRequestException )
+            catch (HttpRequestException)
             {
                 //location not found
                 return new NotFoundResult();
